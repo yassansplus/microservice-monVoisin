@@ -6,7 +6,7 @@ WORKDIR /api-gateway
 
 COPY package*.json .
 
-RUN yarn install
+RUN yarn install && yarn add nodemon
 
 COPY . /api-gateway/
 
