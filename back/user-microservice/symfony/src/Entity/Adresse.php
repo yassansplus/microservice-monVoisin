@@ -40,8 +40,7 @@ class Adresse
     private $departement;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="adresse", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="adresse", cascade={"persist", "remove"})
      */
     private $user;
 
@@ -105,6 +104,12 @@ class Adresse
 
     public function setUser(User $user): self
     {
+        // set the owning side of the relation if necessary
+        if ($user->getAdresse() !== $this) {
+            $user->setAdresse($this);
+        }
+
+
         $this->user = $user;
 
         return $this;
