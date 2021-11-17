@@ -44,7 +44,6 @@ class Adresse
      */
     private $user;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -110,9 +109,9 @@ class Adresse
             $user->setAdresse($this);
         }
 
+
         $this->user = $user;
 
         return $this;
     }
-
 }
