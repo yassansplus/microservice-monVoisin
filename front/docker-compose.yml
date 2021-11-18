@@ -12,3 +12,7 @@ services:
     build: ./paiement-microservice
     ports: ['8082:8080']
     volumes: ['./paiement-microservice:/vue-annonce']
+  vue-vitrine:
+    build: ./vitrine-microservice
+    ports: ['8083:8080']
+    volumes: ['./vitrine-microservice:/vue-annonce']
