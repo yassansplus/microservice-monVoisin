@@ -1,14 +1,13 @@
 <template>
   <div>
-    <b-button @click="alert('ok')">Click Me</b-button>
+    Déposer une annonce
   </div>
 
 </template>
-
 <script>
-
+console.log("ohoh")
 export default {
-  name: 'HelloWorld',
+  name: 'dua',
   components: {}
 }
 </script>
