@@ -4,7 +4,9 @@ import VueRouter from "vue-router";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import HelloWorld from "./components/HelloWorld";
-import dua from "./components/deposer-une-annonce"
+import inscription from "./components/element/inscription";
+import dua from "./components/home"
+
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.config.productionTip = false
@@ -13,7 +15,8 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {path: '/', component: dua},
-        {path: '/deposer-une-annonce', component: HelloWorld}
+        {path: '/deposer-une-annonce', component: HelloWorld},
+        {path: '/inscription', component: inscription}
     ]
 })
 new Vue({

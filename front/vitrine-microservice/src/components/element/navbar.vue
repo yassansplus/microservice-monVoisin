@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar>
-      <template>
+      <template #brand>
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
           <img
               src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
@@ -9,7 +9,7 @@
           >
         </b-navbar-item>
       </template>
-      <template>
+      <template #start>
         <b-navbar-item>
           <router-link to="/"> Accueil</router-link>
         </b-navbar-item>
@@ -17,20 +17,19 @@
           <router-link to="/deposer-une-annonce"> Déposer une annonce</router-link>
         </b-navbar-item>
         <b-navbar-item href="#">
-          Rechercher une annonce
-        </b-navbar-item>
-        <b-navbar-item href="#">
           Contact
         </b-navbar-item>
 
       </template>
 
-      <template>
+      <template #end>
         <b-navbar-item tag="div">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>s'inscrire</strong>
-            </a>
+            <router-link to="/inscription">
+              <a class="button is-primary">
+                <strong>s'inscrire</strong>
+              </a>
+            </router-link>
             <a class="button is-light">
               Se connecter
             </a>
@@ -44,6 +43,7 @@
 <script>
 export default {
   name: 'navbar',
+  components: {},
   methods: {
     clickMe() {
       this.$buefy.notification.open('Clicked!!')
