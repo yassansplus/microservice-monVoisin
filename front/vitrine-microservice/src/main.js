@@ -4,8 +4,9 @@ import VueRouter from "vue-router";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import HelloWorld from "./components/HelloWorld";
-import inscription from "./components/element/inscription";
-import dua from "./components/home"
+import inscription from "./components/pages/inscription";
+import dua from "./components/pages/home"
+import connexion from "./components/pages/connexion";
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
@@ -16,7 +17,8 @@ const router = new VueRouter({
     routes: [
         {path: '/', component: dua},
         {path: '/deposer-une-annonce', component: HelloWorld},
-        {path: '/inscription', component: inscription}
+        {path: '/inscription', component: inscription},
+        {path: '/connexion', component: connexion}
     ]
 })
 new Vue({

@@ -10,8 +10,8 @@
 
 </template>
 <script>
-import banner from './element/banner'
-import card from './element/card'
+import banner from '../element/banner'
+import card from '../element/card'
 
 export default {
   data: function () {

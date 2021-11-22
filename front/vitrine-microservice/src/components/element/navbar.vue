@@ -30,9 +30,12 @@
                 <strong>s'inscrire</strong>
               </a>
             </router-link>
-            <a class="button is-light">
-              Se connecter
-            </a>
+            <router-link to="/connexion">
+              <a class="button is-light">
+                <strong>se connecter</strong>
+              </a>
+            </router-link>
+
           </div>
         </b-navbar-item>
       </template>

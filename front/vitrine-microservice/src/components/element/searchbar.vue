@@ -53,7 +53,7 @@ export default {
 }
 </script>
 <style>
-select {
+.control, .select, select {
   width: 100%;
 }
 </style>
