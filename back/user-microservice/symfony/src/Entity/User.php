@@ -5,12 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity({"email"}, errorPath="email", message="Oh... mais il semblerait que vous soyez deja inscris 🔥")
  * @ApiResource()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,8 +25,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "l' '{{ value }}' semble ne pas être une e-mail valide."
+     * )
      */
     private $email;
 
@@ -41,11 +45,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=70)
+     * @Assert\Length(
+     *      min=2,
+     *      max = 70,
+     *      minMessage = "Attention ⚠️: il semblerait que votre prénom soit trop court",
+     *      maxMessage = "Attention ⚠️: il semblerait que votre nom soit trop long"
+     * )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=70)
+     * @Assert\Length(
+     *      min=2,
+     *      max = 70,
+     *      minMessage = "Attention ⚠️: il semblerait que votre prénom soit trop court",
+     *      maxMessage = "Attention ⚠️: il semblerait que votre nom soit trop long"
+     * )
      */
     private $prenom;
 
@@ -56,11 +72,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Iban(
+     *     message="Oups 😥 il semblerait que votre IBAN comporte une erreur."
+     * )
      */
     private $IBAN;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Bic(
+     *     message="Oups 😥 il semblerait que votre BIC comporte une erreur"
+     * )
      */
     private $BIC;
 
@@ -99,7 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -107,7 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -163,6 +184,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
     public function getNom(): ?string
     {
         return $this->nom;
