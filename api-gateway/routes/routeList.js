@@ -5,7 +5,7 @@ module.exports = {
         PORT: 7010,
         routes: {
             login: '/authentication_token',
-            getUsers: '/api/users',
+            usersRoute: '/api/users',
         }
     }
 }
