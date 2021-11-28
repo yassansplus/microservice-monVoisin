@@ -8,20 +8,9 @@ const axios = require("axios");
 
 // Login function
 router.post('/login', async function (req, res, next) {
-        // const url = routes.BASE_URL + routeUser.routes.login;
-
-        // axios.post(url, {
-        //     email: 'yassine.bousaidi@hotmail.com',
-        //     password: '123'
-        // })
-        //     .then(function (response) {
-        //         res.json(response.data);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
         const url = routes.BASE_URL + routeUser.routes.login;
         const response = await axiosRequest(url, req, res);
+        res.status(response.status)
         res.json(response.data)
     }
 )

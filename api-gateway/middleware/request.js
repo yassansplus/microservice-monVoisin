@@ -7,8 +7,6 @@ module.exports = async function (url, req, res) {
         headers = headers[headers.length - 1] === 'authentication_token' ? {
             'Content-Type': 'application/json'
         } : req.headers;
-
-        console.log(method, url, req.headers);
         return await axios({
             method,
             url,
@@ -17,8 +15,7 @@ module.exports = async function (url, req, res) {
         })
 
     } catch (e) {
-        //  console.log(e)
         res.status(e.response.status)
-        res.json(e.response.statusText)
+        return res.json(e.response.data)
     }
 }
