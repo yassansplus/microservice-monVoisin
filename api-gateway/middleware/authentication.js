@@ -5,7 +5,6 @@ module.exports = function checkToken(req, res, next) {
     const token = req.headers?.authorization?.split(' ')[1]
     jwt.verify(token, cert, function (err, decoded) {
         if (decoded) {
-            req.user = decoded;
             next();
         } else {
             res.status(401)

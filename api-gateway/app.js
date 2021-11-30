@@ -4,8 +4,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const annonceRouter = require('./routes/annonces');
+const login = require('./routes/login');
+const annonces = require("./routes/annonces");
+const authentication = require("./middleware/authentication")
+
 const cors = require('cors');
 const app = express();
 
@@ -16,8 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/annonces', annonceRouter)
-
+app.use('/login', login)
+app.use('/mes-annonces', annonces)
+app.use('/', authentication, indexRouter);
 module.exports = app;

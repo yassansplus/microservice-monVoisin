@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const routes = require('./routeList')
+const routes = require('../middleware/routeList')
 const routeUser = routes.user;
 const axiosRequest = require('../middleware/request')
 const authentication = require('../middleware/authentication')
@@ -9,6 +9,7 @@ const axios = require("axios");
 // Login function
 router.post('/login', async function (req, res, next) {
         const url = routes.BASE_URL + routeUser.routes.login;
+        console.log(url)
         const headers = {'Content-Type': 'application/json'};
         const response = await axiosRequest(url, req, res, headers);
         res.status(response.status)
