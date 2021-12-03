@@ -23,6 +23,9 @@ security:
       stateless: true
       provider: app_user_provider
       jwt: ~
+    refresh:
+      pattern: ^/api/token/refresh
+      stateless: true
     main:
       json_login:
         check_path: /authentication_token
@@ -32,7 +35,8 @@ security:
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
   access_control:
-    - { path: ^/api/user, roles: PUBLIC_ACCESS, methods: [ POST ] }
+    - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [ POST ] }
+    - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/user, roles: ROLE_USER }
     - { path: ^/api/, roles: PUBLIC_ACCESS }
     - { path: ^/authentication_token, roles: PUBLIC_ACCESS }

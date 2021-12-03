@@ -7,9 +7,11 @@ import HelloWorld from "./components/HelloWorld";
 import inscription from "./components/pages/inscription";
 import dua from "./components/pages/home"
 import connexion from "./components/pages/connexion";
-
+import VueCookie from 'vue-cookie';
 Vue.use(Buefy);
 Vue.use(VueRouter);
+Vue.use(VueCookie)
+
 Vue.config.productionTip = false
 
 const router = new VueRouter({

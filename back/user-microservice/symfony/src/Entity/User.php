@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json"))
      */
     private $roles = [];
 
@@ -85,11 +85,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $BIC;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Adresse::class, inversedBy="user", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $adresse;
+//    /**
+//     * @ORM\OneToOne(targetEntity=Adresse::class, inversedBy="user", cascade={"persist", "remove"})
+//     * @ORM\JoinColumn(nullable=false)
+//     */
+//    private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -245,17 +245,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
+//    public function getAdresse(): ?Adresse
+//    {
+//        return $this->adresse;
+//    }
 
-    public function setAdresse(Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
+//    public function setAdresse(Adresse $adresse): self
+//    {
+//        $this->adresse = $adresse;
+//
+//        return $this;
+//    }
 
     public function setUsername(string $username): self
     {

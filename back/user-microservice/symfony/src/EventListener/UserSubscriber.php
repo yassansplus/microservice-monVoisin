@@ -55,6 +55,7 @@ class UserSubscriber implements EventSubscriberInterface
             $entity,
             $entity->getPassword()
         );
+        $entity->setUsername($entity->getEmail());
         $entity->setPassword($hashedPassword);
     }
 }

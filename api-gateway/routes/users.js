@@ -9,7 +9,6 @@ const axios = require("axios");
 // Login function
 router.post('/login', async function (req, res, next) {
         const url = routes.BASE_URL + routeUser.routes.login;
-        console.log(url)
         const headers = {'Content-Type': 'application/json'};
         const response = await axiosRequest(url, req, res, headers);
         res.status(response.status)
@@ -18,7 +17,6 @@ router.post('/login', async function (req, res, next) {
 )
 router.post('/', async function (req, res, next) {
         const url = routes.BASE_URL + routeUser.routes.usersRoute;
-        console.log(`request to ${url}`)
         const headers = {'Content-Type': 'application/json'};
         const response = await axiosRequest(url, req, res, headers);
         res.status(response.status)
