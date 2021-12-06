@@ -13,7 +13,9 @@ security:
       entity:
         class: App\Entity\User
         property: email
-
+    jwt:
+      lexik_jwt:
+        class: App\Entity\User
   firewalls:
     dev:
       pattern: ^/_(profiler|wdt)
@@ -21,13 +23,15 @@ security:
     api:
       pattern: ^/api
       stateless: true
-      provider: app_user_provider
+      provider: jwt
+      # provider: app_user_provider
       jwt: ~
     refresh:
       pattern: ^/api/token/refresh
       stateless: true
     main:
       json_login:
+        provider: app_user_provider
         check_path: /authentication_token
         username_path: email
         password_path: password
