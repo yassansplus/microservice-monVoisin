@@ -45,7 +45,6 @@ class UserSubscriber implements EventSubscriberInterface
     private function hashPassword(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
-
         // if this subscriber only applies to certain entity types,
         // add some code to check the entity type as early as possible
         if (!$entity instanceof User) {

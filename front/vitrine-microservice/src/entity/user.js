@@ -3,5 +3,5 @@ module.exports = {
     password: null,
     nom: "",
     prenom: "",
-    adresse: "",
+    adresse: {},
 }

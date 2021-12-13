@@ -9,6 +9,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,6 +17,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity({"email"}, errorPath="email", message="Oh... mais il semblerait que vous soyez deja inscris 🔥")
  * @ApiResource()
  */
+#[ApiResource(
+    denormalizationContext: [
+        'groups' => ['write'],
+    ],
+    normalizationContext: [
+        'groups' => ['read:user']
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUserInterface
 {
     /**
@@ -31,17 +40,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
      *     message = "l' '{{ value }}' semble ne pas être une e-mail valide."
      * )
      */
+    #[Groups(["read:user", "write"])]
     private $email;
 
     /**
      * @ORM\Column(type="json"))
      */
+    #[Groups(["read:user", "write"])]
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
+    #[Groups(["write"])]
     private $password;
 
     /**
@@ -53,6 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
      *      maxMessage = "Attention ⚠️: il semblerait que votre nom soit trop long"
      * )
      */
+    #[Groups(["read:user", "write"])]
     private $nom;
 
     /**
@@ -64,11 +77,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
      *      maxMessage = "Attention ⚠️: il semblerait que votre nom soit trop long"
      * )
      */
+    #[Groups(["read:user", "write"])]
     private $prenom;
 
     /**
      * @ORM\Column(type="blob", nullable=true)
      */
+    #[Groups(["read:user", "write"])]
     private $photo;
 
     /**
@@ -77,6 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
      *     message="Oups 😥 il semblerait que votre IBAN comporte une erreur."
      * )
      */
+    #[Groups(["read:user", "write"])]
     private $IBAN;
 
     /**
@@ -84,18 +100,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
      *     message="Oups 😥 il semblerait que votre BIC comporte une erreur"
      * )
      */
+    #[Groups(["read:user", "write"])]
     private $BIC;
 
-//    /**
-//     * @ORM\OneToOne(targetEntity=Adresse::class, inversedBy="user", cascade={"persist", "remove"})
-//     * @ORM\JoinColumn(nullable=false)
-//     */
-//    private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(["read:user", "write"])]
     private $username;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Adresse::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    #[Groups(["read:user", "write"])]
+    private $adresse;
 
     public function getId(): ?int
     {
@@ -246,17 +265,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
         return $this;
     }
 
-//    public function getAdresse(): ?Adresse
-//    {
-//        return $this->adresse;
-//    }
-
-//    public function setAdresse(Adresse $adresse): self
-//    {
-//        $this->adresse = $adresse;
-//
-//        return $this;
-//    }
 
     public function setUsername(string $username): self
     {
@@ -270,5 +278,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
         $user = new User();
 
         return $user;
+    }
+
+    public function getAdresse(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Adresse $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
     }
 }

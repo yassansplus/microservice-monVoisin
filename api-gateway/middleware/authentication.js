@@ -7,14 +7,9 @@ module.exports = function checkToken(req, res, next) {
     const routeAuthorized = ['/users', '/refresh_token']
 
     jwt.verify(token, cert, async function (err, decoded) {
-        let newTokens = null;
-        if (decoded || routeAuthorized.includes(req.path) && req.method === "POST") {
 
-            if (decoded && req.headers.authorization && req.headers["x-token-refresh"]) {
-                newTokens = await refreshToken(req, res, req.headers);
-                res.setHeader("authorization", "Bearer " + newTokens.data.token)
-                    .setHeader("x-token-refresh", newTokens.data.refresh_token)
-            }
+        if (decoded || routeAuthorized.includes(req.path) && req.method === "POST") {
+            await refreshToken(req, res, decoded);
             next()
         } else {
             res.status(401)

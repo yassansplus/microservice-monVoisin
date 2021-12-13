@@ -56,7 +56,8 @@
 import VueGoogleAutocomplete from 'vue-google-autocomplete';
 import user from '../../entity/user';
 import axios from 'axios';
-import routeList from '../../entity/routeList'
+import routeList from '../../entity/routeList';
+import adresseDTO from '../../DTO/adressAdapter'
 
 const submit = function () {
   const method = this.$refs["form-sign-in"].method;
@@ -73,7 +74,11 @@ const submit = function () {
         });
         //Après une inscription réussis on connecte l'utilisateur courant
         axios.post(routeList.login, {email: user.email, password: user.password})
-            .then(res => this.$cookie.set("token", res.data.token,))
+            .then(res => {
+              //TODO: penser à stocker les credential dans Vuex pour faciliter leur utilisation
+              this.$cookie.set("tokenRefresh", res.data.token_refresh, 300)
+              this.$cookie.set("token", res.data.token, 300)
+            })
 
       }).catch(err => err.response.data["violations"].forEach(e => this.$buefy.toast.open({
         duration: 3000,
@@ -87,7 +92,7 @@ export default {
   methods: {
     submit,
     getAddressData: function (addressData) {
-      this.user.adresse = addressData;
+      this.user.adresse = adresseDTO(addressData)
     }
   },
 
