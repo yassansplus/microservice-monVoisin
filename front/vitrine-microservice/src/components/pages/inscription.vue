@@ -64,7 +64,6 @@ const submit = function () {
   const url = this.$refs["form-sign-in"].action;
   const headers = {"Content-type": 'Application/json'}
 
-  console.log(user);
   axios({method, url, headers, data: user})
       .then(res => {
         this.$buefy.toast.open({
@@ -75,9 +74,8 @@ const submit = function () {
         //Après une inscription réussis on connecte l'utilisateur courant
         axios.post(routeList.login, {email: user.email, password: user.password})
             .then(res => {
-              //TODO: penser à stocker les credential dans Vuex pour faciliter leur utilisation
-              this.$cookie.set("tokenRefresh", res.data.token_refresh, 300)
-              this.$cookie.set("token", res.data.token, 300)
+              localStorage.setItem('refresh_token', res.data.refresh_token);
+              localStorage.setItem('token', res.data.token);
             })
 
       }).catch(err => err.response.data["violations"].forEach(e => this.$buefy.toast.open({
@@ -95,7 +93,6 @@ export default {
       this.user.adresse = adresseDTO(addressData)
     }
   },
-
   data: function () {
     return {
       routeList,

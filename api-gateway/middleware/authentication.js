@@ -5,7 +5,6 @@ module.exports = function checkToken(req, res, next) {
     const cert = fs.readFileSync('publicKey.pem');  // get public key
     const token = req.headers?.authorization?.split(' ')[1]
     const routeAuthorized = ['/users', '/refresh_token']
-
     jwt.verify(token, cert, async function (err, decoded) {
 
         if (decoded || routeAuthorized.includes(req.path) && req.method === "POST") {
