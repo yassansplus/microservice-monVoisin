@@ -6,6 +6,7 @@ module.exports = async function (req, res, decoded) {
             const url = routeList.refresh_token;
             const data = {refresh_token: req.headers["x-token-refresh"]};
             const newTokens = await axios.post(url, data);
+            res.setHeader("Access-Control-Expose-Headers", 'authorization,x-token-refresh');
             res.setHeader("authorization", "Bearer " + newTokens.data.token)
                 .setHeader("x-token-refresh", newTokens.data.refresh_token)
         }

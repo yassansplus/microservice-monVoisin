@@ -1,6 +1,6 @@
 const microservice = require("./routeList");
 const axiosRequest = require('./requestAxios');
-module.exports = async (req, res, next) => {
+module.exports = async (req, res) => {
     // On split pour récuperer les différents paramètres de notre routes
     const params = req.params['0'].split('/');
     // On supprime les éléments vide -> ''
@@ -12,7 +12,6 @@ module.exports = async (req, res, next) => {
     if (params.length <= 2) {
         let url = params.length === 1 ? microservice[params[0]] : microservice[params[0]] + params[1];
         const response = await axiosRequest(url, req, res, headers);
-        // console.log(res)
         res.status(response.status)
         res.json(response.data)
     }
