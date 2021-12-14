@@ -9,11 +9,12 @@ import dua from "./components/pages/home"
 import connexion from "./components/pages/connexion";
 import VueCookie from 'vue-cookie';
 import axios from 'axios';
-import routeList from './entity/routeList'
+import routeList from './entity/routeList';
+import store from './store'
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
-Vue.use(VueCookie)
+Vue.use(VueCookie);
 
 Vue.config.productionTip = false
 
@@ -42,9 +43,14 @@ router.beforeEach((to, from, next) => {
         axios.get(routeList.checkjwt, {headers}).then(res => {
             localStorage.token = res.headers.authorization;
             localStorage.refresh_token = res.headers["x-token-refresh"];
+            if (!store.state.user) {
+                store.commit('setUser', JSON.parse(localStorage.user))
+            }
             return next()
         }).catch(e => {
             console.log(e.response.data)
+            store.commit('setAuthorizationMessage', e.response.data.message)
+
             return next({name: "connexion"})
         });
 
@@ -57,5 +63,6 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app')

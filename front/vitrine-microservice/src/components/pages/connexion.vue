@@ -47,14 +47,24 @@ import user from '../../entity/user';
 
 export default {
   name: 'inscription',
+  mounted() {
+    if (this.$store.state.notAuthorized !== null) {
+      this.$buefy.toast.open({
+        duration: 3000,
+        message: this.$store.state.notAuthorized,
+        type: 'is-danger'
+      });
+    }
+  },
   methods: {
     login: function () {
       axios.post(routeList.login, {email: user.email, password: user.password})
           .then(res => {
             localStorage.setItem('refresh_token', res.data.refresh_token);
             localStorage.setItem('token', "Bearer " + res.data.token);
-            console.table()
+
             localStorage.user = atob(res.data.token.split(".")[1]);
+            this.$store.commit('setUser', JSON.parse(localStorage.user))
             this.$router.push('/deposer-une-annonce');
           })
     }

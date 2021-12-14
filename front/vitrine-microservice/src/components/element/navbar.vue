@@ -23,7 +23,7 @@
       </template>
 
       <template #end>
-        <b-navbar-item tag="div">
+        <b-navbar-item v-show="!isLogged" tag="div">
           <div class="buttons">
             <router-link to="/inscription">
               <a class="button is-primary">
@@ -44,9 +44,19 @@
 
 </template>
 <script>
+
+
 export default {
   name: 'navbar',
   components: {},
+  data: function () {
+    return {}
+  },
+  computed: {
+    isLogged: function () {
+      return this.$store.state.user
+    }
+  },
   methods: {
     clickMe() {
       this.$buefy.notification.open('Clicked!!')
