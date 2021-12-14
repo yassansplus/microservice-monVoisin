@@ -12,6 +12,7 @@ import axios from 'axios';
 import routeList from './entity/routeList';
 import store from './store'
 
+
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.use(VueCookie);
@@ -50,7 +51,6 @@ router.beforeEach((to, from, next) => {
         }).catch(e => {
             console.log(e.response.data)
             store.commit('setAuthorizationMessage', e.response.data.message)
-
             return next({name: "connexion"})
         });
 

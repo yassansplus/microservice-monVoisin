@@ -62,7 +62,6 @@ export default {
           .then(res => {
             localStorage.setItem('refresh_token', res.data.refresh_token);
             localStorage.setItem('token', "Bearer " + res.data.token);
-
             localStorage.user = atob(res.data.token.split(".")[1]);
             this.$store.commit('setUser', JSON.parse(localStorage.user))
             this.$router.push('/deposer-une-annonce');
