@@ -2,10 +2,13 @@ version: '3.7'
 services:
   api-gateway:
     build: ./
-    ports: ['3000:3000']
-    volumes: ['./:/api-gateway']
+    ports: [ '3000:3000' ]
+    volumes: [ './:/api-gateway' ]
     networks:
       - user-microservice_all-network
+      - annonce-microservice_all-network
 networks:
-  user-microservice_all-network :
+  user-microservice_all-network:
+    external: true
+  annonce-microservice_all-network:
     external: true

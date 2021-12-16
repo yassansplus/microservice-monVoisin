@@ -5,18 +5,18 @@ import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import HelloWorld from "./components/HelloWorld";
 import inscription from "./components/pages/inscription";
-import dua from "./components/pages/home"
+import dua from "./components/pages/home";
 import connexion from "./components/pages/connexion";
 import VueCookie from 'vue-cookie';
-import axios from 'axios';
-import routeList from './entity/routeList';
-import store from './store'
+import store from './store';
+import axiosConfig from "./utils/axiosConfig";
+// import guard from "./utils/guard";
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.use(VueCookie);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 
 const router = new VueRouter({
@@ -27,42 +27,12 @@ const router = new VueRouter({
         {path: '/inscription', name: 'inscription', component: inscription},
         {path: '/connexion', name: 'connexion', component: connexion}
     ]
-})
+});
 
-
-router.beforeEach((to, from, next) => {
-
-    if (to.name === 'inscription' || to.name === 'connexion') {
-        return next();
-    } else {
-
-        const headers = {
-            'authorization': localStorage.token,
-            'x-token-refresh': localStorage.refresh_token
-        }
-        axios.get(routeList.checkjwt, {headers}).then(res => {
-            localStorage.token = res.headers.authorization;
-            localStorage.refresh_token = res.headers["x-token-refresh"];
-            if (!store.state.user) {
-                store.commit('setUser', JSON.parse(localStorage.user))
-            }
-            return next()
-        }).catch(e => {
-            console.log(e.response.data)
-            store.commit('setAuthorizationMessage', e.response.data.message)
-
-            return next({name: "connexion"})
-        });
-
-
-    }
-
-
-})
-
-
+axiosConfig(router);
+// guard(router);
 new Vue({
     router,
     store,
     render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');

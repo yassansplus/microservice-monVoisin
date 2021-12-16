@@ -1,6 +1,7 @@
 const axios = require("axios");
 module.exports = async function (url, req, res, headers) {
     try {
+        console.log(url);
         const data = req.body;
         const method = req.method;
         return await axios({
@@ -11,7 +12,7 @@ module.exports = async function (url, req, res, headers) {
         })
 
     } catch (e) {
-        res.status(e.response.status)
+        res.status(e.response.status);
         return res.json(e.response.data)
     }
-}
+};
