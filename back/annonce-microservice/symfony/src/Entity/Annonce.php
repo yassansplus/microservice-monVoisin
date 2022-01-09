@@ -47,14 +47,16 @@ class Annonce
     private $photos;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="annonces")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Categorie::class, mappedBy="annonces")
      */
-    private $categorie;
+    private $categories;
+
 
     public function __construct()
     {
         $this->photos = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -145,16 +147,35 @@ class Annonce
 
         return $this;
     }
-
-    public function getCategorie(): ?Categorie
+  
+    /**
+     * @return Collection|Categorie[]
+     */
+    public function getCategories(): Collection
     {
-        return $this->categorie;
+        return $this->categories;
     }
 
-    public function setCategorie(?Categorie $categorie): self
+    public function addCategory(Categorie $category): self
     {
-        $this->categorie = $categorie;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setAnnonces($this);
+        }
 
         return $this;
     }
+
+    public function removeCategory(Categorie $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getAnnonces() === $this) {
+                $category->setAnnonces(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

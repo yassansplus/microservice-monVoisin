@@ -1,17 +1,25 @@
 const routeList = require('./routeList');
 const axios = require("axios");
-module.exports = async function (req, res, decoded) {
+module.exports = async function (req, res, next) {
     try {
-        if (decoded && req.headers.authorization && req.headers["x-token-refresh"]) {
+        if ((req.headers["x-token-refresh"] !== null || req.headers["x-token-refresh"] !== undefined)
+            && req.headers["x-token-refresh"].length > 0) {
             const url = routeList.refresh_token;
             const data = {refresh_token: req.headers["x-token-refresh"]};
-            const newTokens = await axios.post(url, data);
-            res.setHeader("Access-Control-Expose-Headers", 'authorization,x-token-refresh');
-            res.setHeader("authorization", "Bearer " + newTokens.data.token)
-                .setHeader("x-token-refresh", newTokens.data.refresh_token)
+            return axios.post(url, data);
+
         }
 
     } catch (e) {
-        res.status(e.response.data.code).json(e.response.data.message);
+        let status;
+        let message;
+        if (e.response.data.code) {
+            status = e.response.data.code;
+            message = e.response.data.message
+        } else {
+            status = e.response.status;
+            message = e.response.data.detail;
+        }
+        res.status(status).json({message});
     }
-}
+};

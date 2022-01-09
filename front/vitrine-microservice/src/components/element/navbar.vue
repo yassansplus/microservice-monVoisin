@@ -16,7 +16,7 @@
         <b-navbar-item>
           <router-link to="/deposer-une-annonce"> Déposer une annonce</router-link>
         </b-navbar-item>
-        <b-navbar-item href="#">
+        <b-navbar-item href="#" @click="clickMe">
           Contact
         </b-navbar-item>
 
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     clickMe() {
-      this.$buefy.notification.open('Clicked!!')
+      console.log('ok')
     }
   }
 }
