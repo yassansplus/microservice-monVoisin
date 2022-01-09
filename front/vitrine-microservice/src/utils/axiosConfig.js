@@ -4,8 +4,8 @@ import VueCookie from "vue-cookie";
 export default function (router) {
 
     axios.interceptors.response.use(function (response) {
-        if (response.headers.authorization || response.headers["x-token-refresh"]) {
-            VueCookie.set('token', response.headers.authorization.split(" ")[1]);
+        if (response.headers?.authorization !== "null") {
+            VueCookie.set('token', response.headers?.authorization);
             VueCookie.set('refresh_token', response.headers['x-token-refresh']);
         }
         return response;
@@ -17,15 +17,12 @@ export default function (router) {
     });
     axios.interceptors.request.use(
         config => {
-            /* ---- 'Accept': 'application/json',
-            'Authorization': this.token, ---- */
             config.headers.Accept = 'application/json';
             config.headers['x-token-refresh'] = VueCookie.get('refresh_token');
             config.headers.Authorization = 'Bearer ' + VueCookie.get('token');
-            return config // nxt jwt.php
+            return config
         },
         error => {
-            console.log("Request error: ", error);
             return Promise.reject(error);
         });
 }

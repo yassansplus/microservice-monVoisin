@@ -60,9 +60,9 @@ import formModal from './formModal'
 const submit = function () {
   const method = this.$refs["form-sign-in"].method;
   const url = this.$refs["form-sign-in"].action;
-  const headers = {"Content-type": 'Application/json'}
+  // const headers = {"Content-type": 'Application/json'}
 
-  axios({method, url, headers, data: user})
+  axios({method, url, data: user})
       .then(res => {
         this.$buefy.toast.open({
           duration: 3000,
@@ -72,8 +72,11 @@ const submit = function () {
         //Après une inscription réussis on connecte l'utilisateur courant
         axios.post(routeList.login, {email: user.email, password: user.password})
             .then(res => {
-              localStorage.setItem('refresh_token', res.data.refresh_token);
-              localStorage.setItem('token', res.data.token);
+              this.$cookie.set('refresh_token', res.data.refresh_token);
+              this.$cookie.set('token', res.data.token);
+              this.$cookie.set('user', atob(res.data.token.split(".")[1]));
+              this.$store.commit('setUser', this.$cookie.get('user'));
+              this.$router.push('/deposer-une-annonce');
             })
 
       }).catch(err => err.response.data["violations"].forEach(e => this.$buefy.toast.open({
@@ -107,7 +110,4 @@ export default {
 </script>
 
 <style>
-.card-inscription {
-  margin-top: 10%;
-}
 </style>

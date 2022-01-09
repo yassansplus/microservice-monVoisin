@@ -29,6 +29,7 @@ const router = new VueRouter({
     ]
 });
 
+
 axiosConfig(router);
 // guard(router);
 new Vue({

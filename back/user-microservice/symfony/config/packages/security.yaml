@@ -41,7 +41,7 @@ security:
   access_control:
     - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [ POST ] }
     - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/user, roles: ROLE_USER }
+    - { path: ^/api/users, roles: PUBLIC_ACCESS }
     - { path: ^/api/, roles: PUBLIC_ACCESS }
     - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: PUBLIC_ACCESS } # Allows accessing API documentations and Swagger UI

@@ -79,7 +79,7 @@ export default {
     createAnnonce() {
       axios.get(routeList.user + '/44')
           .then(res => {
-            console.log(res);
+            console.log(res.data);
           }).catch(e => console.log(e));
     }
   },

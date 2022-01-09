@@ -1,8 +1,6 @@
 # api/config/packages/security.yaml
 security:
   # https://symfony.com/doc/current/security.html#c-hashing-passwords
-  password_hashers:
-    App\Entity\User: 'auto'
 
   # https://symfony.com/doc/current/security/authenticator_manager.html
   enable_authenticator_manager: true
