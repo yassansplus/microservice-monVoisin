@@ -51,7 +51,9 @@ class Categorie
         return $this;
     }
 
+
     public function getAnnonces(): ?Annonce
+
     {
         return $this->annonces;
     }
@@ -59,7 +61,6 @@ class Categorie
     public function setAnnonces(?Annonce $annonces): self
     {
         $this->annonces = $annonces;
-
         return $this;
     }
 }

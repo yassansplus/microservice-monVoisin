@@ -63,6 +63,7 @@ const submit = function () {
   // const headers = {"Content-type": 'Application/json'}
 
   axios({method, url, data: user})
+
       .then(res => {
         this.$buefy.toast.open({
           duration: 3000,
@@ -77,6 +78,7 @@ const submit = function () {
               this.$cookie.set('user', atob(res.data.token.split(".")[1]));
               this.$store.commit('setUser', this.$cookie.get('user'));
               this.$router.push('/deposer-une-annonce');
+
             })
 
       }).catch(err => err.response.data["violations"].forEach(e => this.$buefy.toast.open({

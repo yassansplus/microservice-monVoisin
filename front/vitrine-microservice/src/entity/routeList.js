@@ -4,3 +4,4 @@ module.exports = {
     checkjwt: "http://localhost:3000/checkjwt",
     categories: "http://localhost:3000/categories",
 };
+

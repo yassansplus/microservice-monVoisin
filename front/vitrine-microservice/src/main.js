@@ -12,11 +12,13 @@ import store from './store';
 import axiosConfig from "./utils/axiosConfig";
 // import guard from "./utils/guard";
 
+
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.use(VueCookie);
-
 Vue.config.productionTip = false;
+
+
 
 
 const router = new VueRouter({
@@ -32,6 +34,7 @@ const router = new VueRouter({
 
 axiosConfig(router);
 // guard(router);
+
 new Vue({
     router,
     store,

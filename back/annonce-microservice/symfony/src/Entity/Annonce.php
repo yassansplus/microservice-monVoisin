@@ -52,12 +52,11 @@ class Annonce
     private $categories;
 
 
-
-
     public function __construct()
     {
         $this->photos = new ArrayCollection();
         $this->categories = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -148,7 +147,7 @@ class Annonce
 
         return $this;
     }
-
+  
     /**
      * @return Collection|Categorie[]
      */
@@ -178,7 +177,5 @@ class Annonce
 
         return $this;
     }
-
-
 
 }

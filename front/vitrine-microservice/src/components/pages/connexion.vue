@@ -47,6 +47,7 @@ export default {
   components: {
     'formModal': formModal
   },
+
   mounted() {
     if (this.$store.state.notAuthorized !== null) {
       this.$buefy.toast.open({
@@ -69,6 +70,7 @@ export default {
             this.$store.commit('setUser', this.$cookie.get('user'));
             this.$router.push('/deposer-une-annonce');
           }).catch(e => console.log(e))
+
     }
   },
   data: function () {

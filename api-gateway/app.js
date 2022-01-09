@@ -22,5 +22,6 @@ app.use(cors());
 app.use('/login', login);
 app.use('/checkjwt', authentication, checkjwt);
 app.use('/mes-annonces', annonces);
+
 app.use('/', authentication, indexRouter);
 module.exports = app;

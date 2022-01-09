@@ -7,6 +7,7 @@ module.exports = async function (req, res, next) {
             const url = routeList.refresh_token;
             const data = {refresh_token: req.headers["x-token-refresh"]};
             return axios.post(url, data);
+
         }
 
     } catch (e) {

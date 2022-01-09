@@ -5,5 +5,5 @@ module.exports = {
     users: "http://user-nginx/api/users",
     refresh_token: "http://user-nginx/api/token/refresh",
     categories: "http://annonce-nginx/api/categories",
-
 };
+
