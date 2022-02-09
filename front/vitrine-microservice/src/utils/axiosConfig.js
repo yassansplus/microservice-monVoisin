@@ -10,6 +10,7 @@ export default function (router) {
         }
         return response;
     }, function (error) {
+        console.log(error);
         if (router.currentRoute.name !== 'connexion' || router.currentRoute.name !== 'inscription') {
             return router.push('/connexion')
         }

@@ -10,7 +10,7 @@ export default new Vuex.Store({
     },
     mutations: {
         setUser(state, user) {
-            state.user = user
+            state.user = JSON.parse(user)
         },
         setAuthorizationMessage(state, message) {
             state.notAuthorized = message

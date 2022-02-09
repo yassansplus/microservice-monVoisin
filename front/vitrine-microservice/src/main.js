@@ -3,7 +3,7 @@ import App from './App.vue';
 import VueRouter from "vue-router";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import HelloWorld from "./components/HelloWorld";
+import deposerUneAnnonce from "./components/pages/deposer-une-annonce";
 import inscription from "./components/pages/inscription";
 import dua from "./components/pages/home";
 import connexion from "./components/pages/connexion";
@@ -25,7 +25,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {path: '/', component: dua},
-        {path: '/deposer-une-annonce', component: HelloWorld},
+        {path: '/deposer-une-annonce', component: deposerUneAnnonce},
         {path: '/inscription', name: 'inscription', component: inscription},
         {path: '/connexion', name: 'connexion', component: connexion}
     ]

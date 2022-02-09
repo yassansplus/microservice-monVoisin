@@ -54,6 +54,8 @@ export default {
   },
   computed: {
     isLogged: function () {
+      console.log(this.$store.state.user);
+      console.log(typeof this.$store.state.user);
       return this.$store.state.user
     }
   },

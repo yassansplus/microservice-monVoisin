@@ -7,7 +7,7 @@
       <div class="card card-annonce">
         <div class="card-content">
           <h2 class="title-annonce">
-            <router-link to="/">Cours de guitare</router-link>
+            <router-link to="/">{{ annonce.titre }}</router-link>
           </h2>
           <div class="content">
             <ul>
@@ -15,19 +15,19 @@
                 <b-icon
                     icon="map-marker-radius-outline">
                 </b-icon>
-                <span>Franconville</span>
+                <span>{{ annonce.user.adresse.locality }}</span>
               </li>
               <li>
                 <b-icon
                     icon="dots-square">
                 </b-icon>
-                <span>Musique</span>
+                <span>{{ annonce.categorie.label }}</span>
               </li>
               <li>
                 <b-icon
                     icon="cash-multiple">
                 </b-icon>
-                <span>5€</span>
+                <span>{{ annonce.prix }}€</span>
               </li>
             </ul>
 
@@ -39,7 +39,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['annonce'],
+  mounted() {
+    console.log(this.annonce)
+  }
+
+}
 </script>
 <style>
 select {

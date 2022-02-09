@@ -7,11 +7,19 @@ use App\Repository\AnnonceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    denormalizationContext: [
+        'groups' => ['write'],
+    ],
+    normalizationContext: [
+        'groups' => ['read:annonce']
+    ]
+)]
 class Annonce
 {
     /**
@@ -19,43 +27,50 @@ class Annonce
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["read:annonce", "write"])]
     private $id;
 
     /**
      * @ORM\Column(type="integer")
      */
+    #[Groups(["read:annonce", "write"])]
     private $userId;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(["read:annonce", "write"])]
     private $titre;
 
     /**
      * @ORM\Column(type="text")
      */
+    #[Groups(["read:annonce", "write"])]
     private $description;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
+    #[Groups(["read:annonce", "write"])]
     private $prix;
 
     /**
      * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="annonce")
      */
+    #[Groups(["read:annonce", "write"])]
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Categorie::class, mappedBy="annonces")
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="annonces")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $categories;
+    #[Groups(["read:annonce", 'write'])]
+    private $categorie;
 
 
     public function __construct()
     {
         $this->photos = new ArrayCollection();
-        $this->categories = new ArrayCollection();
 
     }
 
@@ -147,33 +162,15 @@ class Annonce
 
         return $this;
     }
-  
-    /**
-     * @return Collection|Categorie[]
-     */
-    public function getCategories(): Collection
+
+    public function getCategorie(): ?Categorie
     {
-        return $this->categories;
+        return $this->categorie;
     }
 
-    public function addCategory(Categorie $category): self
+    public function setCategorie(?Categorie $categorie): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->setAnnonces($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getAnnonces() === $this) {
-                $category->setAnnonces(null);
-            }
-        }
+        $this->categorie = $categorie;
 
         return $this;
     }
