@@ -68,7 +68,7 @@ export default {
             //TODO: Dans le back renvoyer le user formater pour s'eviter les opération en plus ici
             this.$cookie.set('user', atob(res.data.token.split(".")[1]));
             this.$store.commit('setUser', this.$cookie.get('user'));
-            this.$router.push('/deposer-une-annonce');
+            this.$router.push('/profil');
           }).catch(e => console.log(e))
 
     }

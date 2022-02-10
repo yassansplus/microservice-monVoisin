@@ -1,6 +1,9 @@
 <template>
   <div>
-    <banner v-bind:show-search-bar="true"></banner>
+    <b-field>
+      <b-loading :is-full-page="isFullPage" v-model="isLoading" :can-cancel="true"></b-loading>
+    </b-field>
+    <banner v-if="showSearch" v-bind:show-search-bar="true"></banner>
     <div class="container">
       <div v-for="(annonce, index) in annonces" :key="index">
         <card :annonce="annonce"></card>
@@ -18,11 +21,22 @@ import routeList from '../../entity/routeList'
 export default {
   data: function () {
     return {
-      annonces: []
+      annonces: [],
+      lookingForMyAnnonce: false,
+      isFullPage: true,
+      isLoading: true,
+      showSearch : true
     }
   },
   beforeMount() {
-    axios.get(routeList.home).then(res => this.annonces = res.data)
+    const userId = JSON.parse(this.$cookie.get('user')).id;
+    const url = this.$route.name === 'mes-annonces' ? routeList.home + "/" + userId : routeList.home;
+    this.showSearch = this.$route.name === 'home';
+    axios.get(url).then(res => {
+      this.annonces = res.data;
+      this.isLoading = false;
+    })
+
   },
   components: {
     banner,

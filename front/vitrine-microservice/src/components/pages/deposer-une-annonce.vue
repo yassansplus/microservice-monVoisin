@@ -115,13 +115,15 @@ export default {
       }
 
       if (weCanSendTheReq) {
+        annonceModel.prix = parseFloat(annonceModel.prix).toFixed(2);
         axios.post(routeList.annonces, annonceModel).then(() => {
           this.$buefy.toast.open({
             duration: 3000,
             message: `🥳 TADAAAA 🥳, Votre annonce est désormais publié suivez la dans votre profil!`,
             type: 'is-success'
           });
-        });
+          this.$router.push('/mes-annonces');
+        }).catch(err => console.error("oops grosse erreur", err));
       } else {
         this.$buefy.toast.open({
           duration: 3000,

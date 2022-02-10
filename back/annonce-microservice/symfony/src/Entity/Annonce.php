@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AnnonceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,8 +20,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: [
         'groups' => ['read:annonce']
-    ]
-)]
+    ],
+
+), ApiFilter(SearchFilter::class, properties: ['userId', 'exact'])]
 class Annonce
 {
     /**

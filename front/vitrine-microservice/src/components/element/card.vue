@@ -42,9 +42,7 @@
 export default {
   props: ['annonce'],
   mounted() {
-    console.log(this.annonce)
   }
-
 }
 </script>
 <style>
