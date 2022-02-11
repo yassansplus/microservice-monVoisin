@@ -104,12 +104,15 @@ export default {
   methods: {
     createAnnonce() {
       annonceModel.userId = JSON.parse(this.$cookie.get('user')).id;
+      delete annonceModel.id;
       let weCanSendTheReq = true;
       let elementTocomplete = '';
       for (const element in annonceModel) {
         if (annonceModel[element] === undefined || annonceModel[element] === "") {
           elementTocomplete = element;
-          weCanSendTheReq = false;
+          if (element !== "id") {
+            weCanSendTheReq = false;
+          }
           break;
         }
       }

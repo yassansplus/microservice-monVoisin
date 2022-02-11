@@ -69,7 +69,14 @@ export default {
             this.$cookie.set('user', atob(res.data.token.split(".")[1]));
             this.$store.commit('setUser', this.$cookie.get('user'));
             this.$router.push('/profil');
-          }).catch(e => console.log(e))
+          }).catch(() => {
+            this.waitRequest = false;
+        this.$buefy.toast.open({
+          duration: 3000,
+          message: "Une erreur est survenu.",
+          type: 'is-warning'
+        })
+      })
 
     }
   },

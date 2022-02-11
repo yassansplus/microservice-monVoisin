@@ -16,9 +16,13 @@
 
     </section>
     <section class="user-action">
-      <owner-annonce-cta v-if="isMyOwn" :is-editing="editMode" :annonce-id="annonce.id"
-                         v-on:editMode="updateEdit()"></owner-annonce-cta>
-      <annonce-cta v-else></annonce-cta>
+      <div v-if="isMyOwn">
+        <owner-annonce-cta :is-editing="editMode" :annonce-id="annonce.id"
+                           v-on:editMode="updateEdit()"></owner-annonce-cta>
+      </div>
+      <div @click="prompt" v-else>
+        <annonce-cta></annonce-cta>
+      </div>
 
     </section>
     <section class="body">
@@ -93,10 +97,9 @@ export default {
   },
   beforeMount() {
     const annonceId = this.$route.params.id;
-    this.isMyOwn = this.$route.name === 'mon-annonce';
     axios.get(routeList.annonces + '/' + annonceId).then(res => {
-      console.log(res.data);
       this.annonce = res.data;
+      this.isMyOwn = this.$route.name === 'mon-annonce' || this.annonce.userId === JSON.parse(this.$cookie.get('user')).id;
     })
   },
   computed: {},
@@ -133,7 +136,19 @@ export default {
         this.annonce = res.data;
       });
       this.editMode = false
-    }
+    },
+    prompt() {
+      console.log('ok')
+      this.$buefy.dialog.prompt({
+        message: `Allez-y faites le premier pas 😁`,
+        inputAttrs: {
+          placeholder: "Ex: Bonjour votre service m'interesse.",
+          maxlength: 140
+        },
+        trapFocus: true,
+        onConfirm: (value) => this.$buefy.toast.open(`Your name is: ${value}`)
+      })
+    },
   },
   components: {
     ownerAnnonceCta,

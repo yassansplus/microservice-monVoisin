@@ -5,12 +5,13 @@ export default function (router) {
 
     axios.interceptors.response.use(function (response) {
         if (response.headers?.authorization !== "null") {
-            VueCookie.set('token', response.headers?.authorization);
-            VueCookie.set('refresh_token', response.headers['x-token-refresh']);
+            if (response.headers?.authorization !== undefined) {
+                VueCookie.set('token', response.headers?.authorization);
+                VueCookie.set('refresh_token', response.headers['x-token-refresh']);
+            }
         }
         return response;
     }, function (error) {
-        console.log(error);
         if (router.currentRoute.name !== 'connexion' || router.currentRoute.name !== 'inscription') {
             return router.push('/connexion')
         }
