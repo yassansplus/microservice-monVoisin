@@ -12,10 +12,10 @@
         </div>
         <div class="column is-10 user-information">
           <div>
-            Bousaidi
+            {{ user.nom }}
           </div>
           <div>
-            Yassine
+            {{ user.prenom }}
           </div>
           <div>
             <b-rate
@@ -47,13 +47,15 @@
 </template>
 <script>
 
-// import axios from "axios";
-// import routeList from '../../entity/routeList'
+import axios from "axios";
+import routeList from '../../entity/routeList'
 import cardProfil from '../element/card-profil'
+import userModel from '../../entity/user'
 
 export default {
   data: function () {
     return {
+      user : userModel,
       cards: [
         {
           caption: "Voir vos annonces publiées",
@@ -98,7 +100,8 @@ export default {
     }
   },
   beforeMount() {
-    //axios.get(routeList.home).then(res => this.cards = res.data)
+    const userId = JSON.parse(this.$cookie.get('user')).id;
+    axios.get(routeList.user + '/' + userId).then(res => this.user = res.data)
   },
   components: {
     cardProfil
@@ -106,13 +109,15 @@ export default {
 }
 </script>
 <style>
-.user-information{
+.user-information {
   margin-top: 120px;
 }
+
 .user-information div {
   font-size: 20px;
 }
-.user-profil-pic{
+
+.user-profil-pic {
   max-width: 150px;
   margin-top: 70px;
 }

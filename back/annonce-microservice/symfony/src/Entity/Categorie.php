@@ -20,6 +20,7 @@ class Categorie
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(["read:annonce", "write"])]
     private $id;
 
     /**
@@ -32,7 +33,6 @@ class Categorie
      * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="categorie")
      */
     private $annonces;
-
 
 
     public function __construct()

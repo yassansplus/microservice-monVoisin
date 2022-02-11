@@ -1,4 +1,5 @@
 module.exports = {
+    id: "",
     titre: "",
     description: "",
     prix: 0,
