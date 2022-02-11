@@ -6,7 +6,8 @@ import "buefy/dist/buefy.css";
 import deposerUneAnnonce from "./components/pages/deposer-une-annonce";
 import inscription from "./components/pages/inscription";
 import profil from "./components/pages/profil"
-import annonce from "./components/pages/home";
+import annonces from "./components/pages/annonces";
+import annonce from "./components/pages/annonce";
 import connexion from "./components/pages/connexion";
 import VueCookie from 'vue-cookie';
 import store from './store';
@@ -23,12 +24,15 @@ Vue.config.productionTip = false;
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {path: '/', name: "home", component: annonce},
+        {path: '/', name: "home", component: annonces},
         {path: '/deposer-une-annonce', component: deposerUneAnnonce},
         {path: '/inscription', name: 'inscription', component: inscription},
         {path: '/connexion', name: 'connexion', component: connexion},
         {path: '/profil', name: 'profil', component: profil},
-        {path: '/mes-annonces', name: 'mes-annonces', component: annonce}
+        {path: '/mes-annonces', name: 'mes-annonces', component: annonces},
+        {path: '/mes-annonces/:id', name: 'mon-annonce', component: annonce},
+        {path: '/annonce/:id', name: 'annonce', component: annonce}
+
     ]
 });
 

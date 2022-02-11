@@ -115,7 +115,7 @@ export default {
       }
 
       if (weCanSendTheReq) {
-        annonceModel.prix = parseFloat(annonceModel.prix).toFixed(2);
+        annonceModel.prix = parseInt(annonceModel.prix);
         axios.post(routeList.annonces, annonceModel).then(() => {
           this.$buefy.toast.open({
             duration: 3000,

@@ -6,7 +6,9 @@
     <banner v-if="showSearch" v-bind:show-search-bar="true"></banner>
     <div class="container">
       <div v-for="(annonce, index) in annonces" :key="index">
-        <card :annonce="annonce"></card>
+        <router-link :to="'/'+basePath+'/'+annonce.id">
+          <card :annonce="annonce"></card>
+        </router-link>
       </div>
     </div>
   </div>
@@ -25,13 +27,16 @@ export default {
       lookingForMyAnnonce: false,
       isFullPage: true,
       isLoading: true,
-      showSearch : true
+      showSearch: true,
+      basePath: 'annonce',
     }
   },
   beforeMount() {
     const userId = JSON.parse(this.$cookie.get('user')).id;
     const url = this.$route.name === 'mes-annonces' ? routeList.home + "/" + userId : routeList.home;
     this.showSearch = this.$route.name === 'home';
+    this.basePath = this.$route.name === 'home' ? 'annonce' : 'mes-annonces';
+
     axios.get(url).then(res => {
       this.annonces = res.data;
       this.isLoading = false;

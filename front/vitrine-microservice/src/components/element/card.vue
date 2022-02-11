@@ -7,7 +7,7 @@
       <div class="card card-annonce">
         <div class="card-content">
           <h2 class="title-annonce">
-            <router-link to="/">{{ annonce.titre }}</router-link>
+            {{ annonce.titre }}
           </h2>
           <div class="content">
             <ul>

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="card">
+    <div class="card profil">
       <div class="card-content">
         <div class="content">
           <div class="columns">
             <div class="column is-3 ">
               <b-icon
                   pack="fas"
-                  :icon="icon"
+                  :icon="icon+ ' profil-icon'"
               >
               </b-icon>
             </div>
@@ -62,14 +62,14 @@ export default {
 }
 </script>
 <style>
-.card{
+.card.profil{
   border-radius: 20px;
   padding: 60px 40px;
 }
 .caption{
   font-size: 23px;
 }
-.fas:before {
+.fas.profil-icon:before {
   font-size: 80px;
 }
 </style>
