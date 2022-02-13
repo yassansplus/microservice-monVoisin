@@ -8,6 +8,7 @@ const login = require('./routes/login');
 const checkjwt = require('./routes/checkJWT');
 const annonces = require("./routes/annonces");
 const rooms = require('./routes/rooms');
+const paiement = require('./routes/paiement');
 const authentication = require("./middleware/authentication");
 
 const cors = require('cors');
@@ -24,6 +25,7 @@ app.use('/login', login);
 app.use('/checkjwt', authentication, checkjwt);
 app.use('/home', annonces);
 app.use('/rooms', rooms);
+app.use('/paiement', paiement);
 
 
 app.use('/', authentication, indexRouter);

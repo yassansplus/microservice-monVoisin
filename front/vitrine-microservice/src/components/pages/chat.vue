@@ -4,6 +4,14 @@
       <div class="column is-offset-4">
         <h1>{{ roomChat.annonce.titre }}</h1>
         <h5>{{ roomChat.author.nom }} {{ roomChat.author.prenom }}</h5>
+        <div v-if="room.annonce.prix >0">
+          <div v-if="!hasPaied">
+            <router-link :to="{name: 'paiement',params: {room}}">
+              <b-button type="is-primary is-light">Payer</b-button>
+            </router-link>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="columns">
@@ -39,14 +47,13 @@ export default {
     }
   },
   beforeMount() {
-
+    console.log(this.hasPaied);
     if (this.room === undefined) {
       this.$router.push('/mes-demandes');
     }
     this.user = JSON.parse(this.$cookie.get('user'));
   },
   mounted() {
-    console.log(this.roomChat);
     // We execute this functino in mounted bc we need to load data bedore and mount the component
     this.scrollToBottom();
     // Ajouter l'ajax pour le chat
@@ -57,7 +64,7 @@ export default {
   destroyed() {
     clearInterval(this.reloadMessage)
   },
-  props: ['room'],
+  props: ['room', 'hasPaied'],
   name: 'chat',
   components: {},
   computed: {

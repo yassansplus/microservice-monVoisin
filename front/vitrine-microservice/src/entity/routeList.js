@@ -8,5 +8,6 @@ module.exports = {
     chats: "http://localhost:3000/chats",
     rooms: "http://localhost:3000/rooms",
     myRooms: "http://localhost:3000/rooms/my-rooms",
+    paiement: "http://localhost:3000/paiement",
 };
 

@@ -44,7 +44,6 @@ export default {
 
     axios.get(url).then(res => {
       this.annonces = res.data;
-      console.log(this.annonces);
       this.isLoading = false;
     })
 

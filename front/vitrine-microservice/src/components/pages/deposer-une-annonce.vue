@@ -93,7 +93,6 @@ export default {
   beforeMount() {
     axios.get(routeList.categories)
         .then(res => {
-          console.log(res.data);
           this.categories = res.data
         }).catch(e => {
       if (e.response.data.status) {

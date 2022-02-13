@@ -9,17 +9,24 @@ import profil from "./components/pages/profil"
 import annonces from "./components/pages/annonces";
 import annonce from "./components/pages/annonce";
 import roomsList from './components/pages/rooms-list';
+import paiement from './components/pages/paiement';
 import chat from './components/pages/chat'
 import connexion from "./components/pages/connexion";
 import VueCookie from 'vue-cookie';
 import store from './store';
+import {StripePlugin} from "@vue-stripe/vue-stripe";
 import axiosConfig from "./utils/axiosConfig";
 // import guard from "./utils/guard";
 
+const options = {
+    pk: "pk_test_ctOM1rGg5iY3uVYncdVEO4EC",
+    locale: "fr",
+};
 
 Vue.use(Buefy);
 Vue.use(VueRouter);
 Vue.use(VueCookie);
+Vue.use(StripePlugin, options);
 Vue.config.productionTip = false;
 
 
@@ -35,7 +42,8 @@ const router = new VueRouter({
         {path: '/mes-annonces/:id', name: 'mon-annonce', component: annonce},
         {path: '/annonce/:id', name: 'annonce', component: annonce},
         {path: '/mes-demandes', name: 'mes-demandes', component: roomsList},
-        {path: '/chat', name: 'chat', component: chat, props: true}
+        {path: '/chat', name: 'chat', component: chat, props: true},
+        {path: '/paiement', name: 'paiement', component: paiement, props: true}
     ]
 });
 
