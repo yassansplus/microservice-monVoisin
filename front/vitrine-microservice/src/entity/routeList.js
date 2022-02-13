@@ -5,5 +5,8 @@ module.exports = {
     categories: "http://localhost:3000/categories",
     annonces: "http://localhost:3000/annonces",
     home: "http://localhost:3000/home",
+    chats: "http://localhost:3000/chats",
+    rooms: "http://localhost:3000/rooms",
+    myRooms: "http://localhost:3000/rooms/my-rooms",
 };
 

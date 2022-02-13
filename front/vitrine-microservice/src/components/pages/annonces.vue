@@ -32,13 +32,19 @@ export default {
     }
   },
   beforeMount() {
-    const userId = JSON.parse(this.$cookie.get('user')).id;
-    const url = this.$route.name === 'mes-annonces' ? routeList.home + "/" + userId : routeList.home;
+    let url = '';
+    let userId = "";
+    if (this.$cookie.get('user') !== null) {
+      userId = JSON.parse(this.$cookie.get('user')).id;
+    }
+    url = this.$route.name === 'mes-annonces' ? routeList.home + "/" + userId : routeList.home;
+
     this.showSearch = this.$route.name === 'home';
     this.basePath = this.$route.name === 'home' ? 'annonce' : 'mes-annonces';
 
     axios.get(url).then(res => {
       this.annonces = res.data;
+      console.log(this.annonces);
       this.isLoading = false;
     })
 

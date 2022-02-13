@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: "chat-mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: password
+      MYSQL_TCP_PORT: 3307
+    ports: [ '3309:3307' ]
+    networks:
+      - all-network
+  php:
+    build: ./docker/php
+    ports: [ '9020:9000' ]
+    container_name: "chat-php"
+    volumes: [ './symfony/:/var/www/symfony:cached' ]
+    networks:
+      - all-network
+  chat-nginx:
+    container_name: "chat-nginx"
+    build: ./docker/nginx
+    ports: [ '7030:80' ]
+    volumes: [ './symfony/:/var/www/symfony:cached' ]
+    networks:
+      - all-network
+networks:
+  all-network:
+    driver: bridge

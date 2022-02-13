@@ -20,7 +20,7 @@
         <owner-annonce-cta :is-editing="editMode" :annonce-id="annonce.id"
                            v-on:editMode="updateEdit()"></owner-annonce-cta>
       </div>
-      <div @click="prompt" v-else>
+      <div @click="prompt" v-else-if="!didUserAnswerToThis">
         <annonce-cta></annonce-cta>
       </div>
 
@@ -84,31 +84,45 @@ import annonceCta from '../element/annonce-cta'
 import axios from "axios"
 import routeList from '../../entity/routeList'
 import annonceModel from '../../entity/annonce'
+import roomsModel from '../../entity/rooms'
 //TODO: verifier pourquoi le Clone de l'objet ne fonctionne pas à l'annulation de l'edition
 export default {
   data: function () {
     return {
       isMyOwn: false,
       annonce: annonceModel,
+      rooms: roomsModel,
       editMode: false,
       currentAnnonce: {},
-      categories: {}
+      categories: {},
+      didUserAnswerToThis: false,
+      user: JSON.parse(this.$cookie.get('user')),
+      test: 'test'
     }
   },
   beforeMount() {
+    //declaration des variables de vérification
     const annonceId = this.$route.params.id;
+    const auteurId = this.annonce.userId;
+    const expediteurId = this.user.id;
+
+    //requete pour verifier s'il y a deja une discussion entamer entre les deux
+    // TODO: verifier s'il sont deja en contact
+    axios.get(routeList.rooms +
+        `?annonceTitle=${annonceId}&firstParticipant=${auteurId}&secondParticipant=${expediteurId}`)
+        .then(res => this.didUserAnswerToThis = res.data.length > 0).catch(err => console.log(err));
+
+    // requete pour verifier si l'on est sur ses annonces ou sur les annonces normaux;
     axios.get(routeList.annonces + '/' + annonceId).then(res => {
       this.annonce = res.data;
-      this.isMyOwn = this.$route.name === 'mon-annonce' || this.annonce.userId === JSON.parse(this.$cookie.get('user')).id;
+      this.isMyOwn = this.$route.name === 'mon-annonce' || this.annonce.userId === this.user.id;
     })
   },
-  computed: {},
   methods: {
     updateEdit() {
       this.editMode = !this.editMode;
       axios.get(routeList.categories)
           .then(res => {
-            console.log(res.data);
             this.categories = res.data
           }).catch(e => {
         if (e.response.data.status) {
@@ -138,7 +152,6 @@ export default {
       this.editMode = false
     },
     prompt() {
-      console.log('ok')
       this.$buefy.dialog.prompt({
         message: `Allez-y faites le premier pas 😁`,
         inputAttrs: {
@@ -146,7 +159,25 @@ export default {
           maxlength: 140
         },
         trapFocus: true,
-        onConfirm: (value) => this.$buefy.toast.open(`Your name is: ${value}`)
+        onConfirm: (message) => {
+          const auteurId = this.annonce.userId;
+          const expediteurId = this.user.id;
+
+          delete this.rooms.id;
+          this.rooms.annonceTitle = this.annonce.id;
+          this.rooms.firstParticipant = auteurId;
+          this.rooms.secondParticipant = expediteurId;
+          this.rooms.messages.push({text: message, sender: expediteurId});
+
+          axios.post(routeList.rooms, this.rooms).then(() => {
+            this.didUserAnswerToThis = !this.didUserAnswerToThis;
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: "Notre cyber-coursier s'occuper de votre message resté au chaud 💫",
+              type: 'is-success'
+            });
+          }).catch(err => console.log(err))
+        }
       })
     },
   },

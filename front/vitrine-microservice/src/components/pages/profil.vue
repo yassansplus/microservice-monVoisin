@@ -64,6 +64,12 @@ export default {
           title: 'Annonces'
         },
         {
+          caption: "Les annonces auxquel j'ai fais une demande",
+          icon: "fill-drip",
+          link: "/mes-demandes",
+          title: 'Mes demandes'
+        },
+        {
           caption: "Toutes vos transactions",
           icon: "credit-card",
           link: "/mes-transactions",
@@ -80,12 +86,6 @@ export default {
           icon: "user-shield",
           link: "/mes-annonces",
           title: 'Sécurité'
-        },
-        {
-          caption: "Les annonces auxquel j'ai fais une demande",
-          icon: "fill-drip",
-          link: "/mes-annonces",
-          title: 'Mes demandes'
         },
 
       ]
