@@ -43,6 +43,7 @@ export default {
     this.basePath = this.$route.name === 'home' ? 'annonce' : 'mes-annonces';
 
     axios.get(url).then(res => {
+
       this.annonces = res.data;
       this.isLoading = false;
     })
