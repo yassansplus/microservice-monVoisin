@@ -120,6 +120,21 @@ export default {
                 const payment = await this.paymentMethodReq();
                 const confirm = await this.confirmPayment(payment, res.data.client_secret);
                 if (confirm.status === "succeeded") {
+                  const enregistrement = await axios.post(routeList.paiement + '/success', {
+                    room: this.room,
+                    roomId: this.room.id,
+                    userPayer: user.id,
+                    userReceiverId: this.room.firstParticipant,
+                    paiementId: confirm.id
+                  });
+                  if (enregistrement) {
+                    this.$buefy.toast.open({
+                      duration: 3000,
+                      message: 'Paiement accepté !!',
+                      type: 'is-success'
+                    });
+                  }
+
                   await this.$router.push({name: 'chat', params: {room: this.room, hasPaied: true}})
                 }
               }

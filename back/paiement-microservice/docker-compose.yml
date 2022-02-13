@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: "paiement-mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: password
+      MYSQL_TCP_PORT: 3307
+    ports: [ '3310:3307' ]
+    networks:
+      - all-network
+  php:
+    build: ./docker/php
+    ports: [ '9030:9000' ]
+    container_name: "paiement-php"
+    volumes: [ './symfony/:/var/www/symfony:cached' ]
+    networks:
+      - all-network
+  paiement-nginx:
+    container_name: "paiement-nginx"
+    build: ./docker/nginx
+    ports: [ '7040:80' ]
+    volumes: [ './symfony/:/var/www/symfony:cached' ]
+    networks:
+      - all-network
+networks:
+  all-network:
+    driver: bridge

@@ -9,5 +9,6 @@ module.exports = {
     home: "http://annonce-nginx/api/annonces",
     chats: "http://chat-nginx/api/messages",
     rooms: "http://chat-nginx/api/rooms",
+    paiement: "http://paiement-nginx/api/paiements",
 };
 

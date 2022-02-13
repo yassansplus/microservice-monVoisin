@@ -8,10 +8,13 @@ services:
       - user-microservice_all-network
       - annonce-microservice_all-network
       - chat-microservice_all-network
+      - paiement-microservice_all-network
 networks:
   user-microservice_all-network:
     external: true
   annonce-microservice_all-network:
     external: true
   chat-microservice_all-network:
+    external: true
+  paiement-microservice_all-network:
     external: true

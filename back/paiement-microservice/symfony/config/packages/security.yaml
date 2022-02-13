@@ -1,0 +1,19 @@
+# api/config/packages/security.yaml
+security:
+  # https://symfony.com/doc/current/security.html#c-hashing-passwords
+  # https://symfony.com/doc/current/security/authenticator_manager.html
+  enable_authenticator_manager: true
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+
+  firewalls:
+    dev:
+      pattern: ^/_(profiler|wdt)
+      security: false
+    api:
+      pattern: ^/api
+      stateless: true
+
+
+  access_control:
+    - { path: ^/api/, roles: PUBLIC_ACCESS }
+    - { path: ^/, roles: PUBLIC_ACCESS } # Allows accessing API documentations and Swagger UI

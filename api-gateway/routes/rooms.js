@@ -10,7 +10,6 @@ router.get('/', async function (req, res, next) {
         'Content-Type': 'application/json', 'Accept': 'application/json' +
             ''
     };
-    console.log('test');
     const rooms = await axiosRequest("http://chat-nginx/api" + req.originalUrl, req, res, headers);
     res.json(rooms.data);
 
@@ -21,8 +20,15 @@ router.get('/my-rooms', async function (req, res, next) {
         'Content-Type': 'application/json', 'Accept': 'application/json' +
             ''
     };
-    const currentUserId = req.query['secondParticipant'];
-    const rooms = await axiosRequest("http://chat-nginx/api/rooms?secondParticipant=" + currentUserId, req, res, headers);
+    let rooms = {};
+    const currentUserId = req.query['secondParticipant'] ? req.query['secondParticipant'] : req.query['firstParticipant'];
+    if (req.query['secondParticipant'] !== undefined) {
+        rooms = await axiosRequest("http://chat-nginx/api/rooms?secondParticipant=" + currentUserId, req, res, headers);
+    } else {
+        rooms = await axiosRequest("http://chat-nginx/api/rooms?firstParticipant=" + currentUserId, req, res, headers);
+
+    }
+
     for (let room of rooms.data) {
         const userAuthor = await axiosRequest(routes.users + "/" + room.firstParticipant, req, res, headers);
         const annonce = await axiosRequest(routes.annonces + "/" + room.annonceTitle, req, res, headers);

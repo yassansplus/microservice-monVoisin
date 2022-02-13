@@ -10,7 +10,8 @@ import annonces from "./components/pages/annonces";
 import annonce from "./components/pages/annonce";
 import roomsList from './components/pages/rooms-list';
 import paiement from './components/pages/paiement';
-import chat from './components/pages/chat'
+import chat from './components/pages/chat';
+import transactions from './components/pages/transactions'
 import connexion from "./components/pages/connexion";
 import VueCookie from 'vue-cookie';
 import store from './store';
@@ -42,6 +43,7 @@ const router = new VueRouter({
         {path: '/mes-annonces/:id', name: 'mon-annonce', component: annonce},
         {path: '/annonce/:id', name: 'annonce', component: annonce},
         {path: '/mes-demandes', name: 'mes-demandes', component: roomsList},
+        {path: '/mes-transactions', name: 'mes-transactions', component: transactions},
         {path: '/chat', name: 'chat', component: chat, props: true},
         {path: '/paiement', name: 'paiement', component: paiement, props: true}
     ]

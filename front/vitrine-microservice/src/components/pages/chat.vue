@@ -78,7 +78,7 @@ export default {
       this.roomChat.messages.push({...this.chat});
       axios.put(routeList.rooms + '/' + this.room.id, this.roomChat).then(res => {
         this.roomChat = res.data;
-        this.chat.text = '';
+        this.chat.text = null;
         this.scrollToBottom()
       });
     },

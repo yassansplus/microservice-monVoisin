@@ -25,7 +25,7 @@ app.use('/login', login);
 app.use('/checkjwt', authentication, checkjwt);
 app.use('/home', annonces);
 app.use('/rooms', rooms);
-app.use('/paiement', paiement);
+app.use('/paiements', authentication, paiement);
 
 
 app.use('/', authentication, indexRouter);
