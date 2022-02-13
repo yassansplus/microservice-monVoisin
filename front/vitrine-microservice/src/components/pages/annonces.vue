@@ -3,9 +3,35 @@
     <b-field>
       <b-loading :is-full-page="isFullPage" v-model="isLoading" :can-cancel="true"></b-loading>
     </b-field>
-    <banner v-if="showSearch" v-bind:show-search-bar="true"></banner>
+    <div v-if="showSearch">
+      <div>
+
+        <div class="banner has-background-primary-light">
+          <h1 class="banner-title">
+            Rechercher un service avec Mon voisin
+          </h1>
+        </div>
+        <div class="container">
+          <section class="container">
+            <div class="columns">
+              <div class="block column is-offset-4 is-4 ">
+                <b-field label="Rechercher un service" :label-position="labelPosition">
+                  <b-input placeholder="Rechercher un service 🔍..."
+                           type="search"
+                           icon="magnify"
+                           v-model="search"
+                           rounded
+                  >
+                  </b-input>
+                </b-field>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
     <div class="container">
-      <div v-for="(annonce, index) in annonces" :key="index">
+      <div v-for="(annonce, index) in filteredList" :key="index">
         <router-link :to="'/'+basePath+'/'+annonce.id">
           <card :annonce="annonce"></card>
         </router-link>
@@ -15,7 +41,6 @@
 
 </template>
 <script>
-import banner from '../element/banner'
 import card from '../element/card'
 import axios from "axios";
 import routeList from '../../entity/routeList'
@@ -28,7 +53,9 @@ export default {
       isFullPage: true,
       isLoading: true,
       showSearch: true,
+      labelPosition: 'on-border',
       basePath: 'annonce',
+      search: ''
     }
   },
   beforeMount() {
@@ -49,9 +76,28 @@ export default {
     })
 
   },
+  computed: {
+    filteredList() {
+      return this.annonces.filter(annonce => {
+        return annonce.titre.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  },
   components: {
-    banner,
     card
   }
 }
 </script>
+<style>
+.banner {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.control, .select, select {
+  width: 100%;
+}
+</style>
