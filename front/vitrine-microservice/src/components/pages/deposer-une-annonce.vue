@@ -11,6 +11,33 @@
     }
     <template v-slot:title>Déposer une annonce</template>
     <template v-slot:form>
+      <NotVuemik :initialValues="
+      {
+        userId: null,
+        titre: '',
+        price: 0,
+        description: '',
+      }"
+      :onSubmit="createAnnonce"
+      v-slot="{ handleSubmit }">
+            <div class="columns">
+              <div class="column">
+                <Field
+                    component="input"
+                    placeholder="Je vais réparer votre tondeuse à gazon"
+                    name="titre"
+                    v-model="annonceModel.titre">
+                </Field>
+              </div>
+            </div>
+        <Field component="input" placeholder="Prix de l'annonce" name="price"></Field>
+        <Field component="textarea" placeholder="Description de l'annonce" name="description"></Field>
+
+        <b-button type="is-primary" @click="createAnnonce">Créer mon annonce</b-button>
+        <b-loading :is-full-page="true" v-model="waitRequest" :can-cancel="false"  @click="handleSubmit"></b-loading>
+      </NotVuemik>
+
+<!--
       <form action="" method="post" slot="form">
         <div class="columns">
           <div class="column">
@@ -66,6 +93,7 @@
         <b-loading :is-full-page="true" v-model="waitRequest" :can-cancel="false"></b-loading>
 
       </form>
+-->
     </template>
   </form-modal>
 </template>
@@ -75,10 +103,13 @@ import axios from 'axios';
 import routeList from '../../entity/routeList'
 import formModal from './formModal'
 import annonceModel from '../../entity/annonce'
-
+import { NotVuemik } from "../../libs/notvuemik"
+import Field from "../../utils/NotVuemik/Field";
 export default {
   name: 'deposerUneAnnonce',
   components: {
+    NotVuemik,
+    Field,
     'form-modal': formModal
   },
   data: function () {
@@ -87,7 +118,6 @@ export default {
       waitRequest: false,
       categories: [],
       annonceModel
-
     }
   },
   beforeMount() {
@@ -125,11 +155,11 @@ export default {
             type: 'is-success'
           });
           this.$router.push('/mes-annonces');
-        }).catch(err => console.error("oops grosse erreur", err));
+        }).catch(err => console.error("Oops, grosse erreur", err));
       } else {
         this.$buefy.toast.open({
           duration: 3000,
-          message: `Il semblerait qu'il y ai une erreur dans le formulaire. veuillez remplir le champ ${elementTocomplete}`,
+          message: `Il semblerait qu'il y ait une erreur dans le formulaire. Veuillez remplir le champ ${elementTocomplete}`,
           type: 'is-danger'
         });
       }

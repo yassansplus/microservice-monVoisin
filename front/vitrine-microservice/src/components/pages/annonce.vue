@@ -87,6 +87,7 @@ import annonceModel from '../../entity/annonce'
 import roomsModel from '../../entity/rooms'
 //TODO: verifier pourquoi le Clone de l'objet ne fonctionne pas à l'annulation de l'edition
 export default {
+
   data: function () {
     return {
       isMyOwn: false,

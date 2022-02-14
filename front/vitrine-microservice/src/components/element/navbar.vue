@@ -9,7 +9,7 @@
           >
         </b-navbar-item>
       </template>
-      <template #start>
+      <template #start v-if="isLogged === true">
         <b-navbar-item>
           <router-link to="/"> Accueil</router-link>
         </b-navbar-item>
@@ -25,8 +25,8 @@
 
       </template>
 
-      <template #end>
-        <b-navbar-item v-show="!isLogged" tag="div">
+      <template #end v-else-if="isLogged === false">
+        <b-navbar-item tag="div">
           <div class="buttons">
             <router-link to="/inscription">
               <a class="button is-primary">
@@ -57,9 +57,7 @@ export default {
   },
   computed: {
     isLogged: function () {
-      console.log(this.$store.state.user);
-      console.log(typeof this.$store.state.user);
-      return this.$store.state.user
+      return (this.$store.state.user) !== null;
     }
   },
   methods: {

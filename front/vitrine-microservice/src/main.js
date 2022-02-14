@@ -52,6 +52,10 @@ const router = new VueRouter({
 
 axiosConfig(router);
 // guard(router);
+store.commit('setUser', VueCookie.get('user'));
+if (VueCookie.get('token')) {
+    VueCookie.set('user', atob(VueCookie.get('token').split(".")[1]))
+}
 
 new Vue({
     router,
