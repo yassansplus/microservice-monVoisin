@@ -7,7 +7,7 @@
         <div v-if="room.annonce.prix >0">
           <div v-if="!hasPaied">
             <router-link :to="{name: 'paiement',params: {room}}">
-              <b-button type="is-primary is-light">Payer</b-button>
+              <b-button type="is-primary is-light" v-if="user.id === roomChat.author.id">Payer</b-button>
             </router-link>
           </div>
         </div>

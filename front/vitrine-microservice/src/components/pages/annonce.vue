@@ -103,6 +103,10 @@ export default {
   },
   beforeMount() {
     //declaration des variables de vérification
+    if (this.user === null || this.user === undefined) {
+      this.$router.push("/connexion");
+      return;
+    }
     const annonceId = this.$route.params.id;
     const auteurId = this.annonce.userId;
     const expediteurId = this.user.id;

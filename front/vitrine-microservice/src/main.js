@@ -17,10 +17,11 @@ import VueCookie from 'vue-cookie';
 import store from './store';
 import {StripePlugin} from "@vue-stripe/vue-stripe";
 import axiosConfig from "./utils/axiosConfig";
+require("dotenv").config()
 // import guard from "./utils/guard";
 
 const options = {
-    pk: "pk_test_ctOM1rGg5iY3uVYncdVEO4EC",
+    pk: process.env.pk_stripe,
     locale: "fr",
 };
 
