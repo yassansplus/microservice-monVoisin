@@ -75,7 +75,8 @@ import axios from 'axios';
 import routeList from '../../entity/routeList'
 import formModal from './formModal'
 import annonceModel from '../../entity/annonce'
-
+// import { NotVuemik } from "../../libs/notvuemik"
+// import Field from "../../utils/NotVuemik/Field";
 export default {
   name: 'deposerUneAnnonce',
   components: {
@@ -87,7 +88,6 @@ export default {
       waitRequest: false,
       categories: [],
       annonceModel
-
     }
   },
   beforeMount() {
@@ -125,11 +125,11 @@ export default {
             type: 'is-success'
           });
           this.$router.push('/mes-annonces');
-        }).catch(err => console.error("oops grosse erreur", err));
+        }).catch(err => console.error("Oops, grosse erreur", err));
       } else {
         this.$buefy.toast.open({
           duration: 3000,
-          message: `Il semblerait qu'il y ai une erreur dans le formulaire. veuillez remplir le champ ${elementTocomplete}`,
+          message: `Il semblerait qu'il y ait une erreur dans le formulaire. Veuillez remplir le champ ${elementTocomplete}`,
           type: 'is-danger'
         });
       }

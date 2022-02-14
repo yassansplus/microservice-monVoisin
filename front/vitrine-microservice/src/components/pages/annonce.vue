@@ -87,6 +87,7 @@ import annonceModel from '../../entity/annonce'
 import roomsModel from '../../entity/rooms'
 //TODO: verifier pourquoi le Clone de l'objet ne fonctionne pas à l'annulation de l'edition
 export default {
+
   data: function () {
     return {
       isMyOwn: false,
@@ -102,6 +103,10 @@ export default {
   },
   beforeMount() {
     //declaration des variables de vérification
+    if (this.user === null || this.user === undefined) {
+      this.$router.push("/connexion");
+      return;
+    }
     const annonceId = this.$route.params.id;
     const auteurId = this.annonce.userId;
     const expediteurId = this.user.id;

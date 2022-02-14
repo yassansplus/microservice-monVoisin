@@ -12,6 +12,7 @@
     "axios": "^0.24.0",
     "buefy": "^0.9.13",
     "core-js": "^3.6.5",
+    "dotenv": "^16.0.0",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "vue": "^2.6.11",
